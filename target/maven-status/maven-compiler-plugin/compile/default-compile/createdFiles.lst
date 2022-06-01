@@ -1,0 +1,17 @@
+com\pe\fico\serviceimpl\UserServiceImpl.class
+com\pe\fico\service\IUserService.class
+com\pe\fico\serviceimpl\UploadFileServiceImpl.class
+com\pe\fico\service\IUploadFileService.class
+com\pe\fico\MvcConfig.class
+com\pe\fico\entities\Role.class
+com\pe\fico\controllers\UserController.class
+com\pe\fico\serviceimpl\RoleServiceImpl.class
+com\pe\fico\repositories\RoleRepository.class
+com\pe\fico\controllers\LoginController.class
+com\pe\fico\entities\Users.class
+com\pe\fico\serviceimpl\JpaUserDetailsService.class
+com\pe\fico\repositories\UserRepository.class
+com\pe\fico\FicoSpringApplication.class
+com\pe\fico\service\IRoleService.class
+com\pe\fico\controllers\RoleController.class
+com\pe\fico\SpringSecurityConfig.class
