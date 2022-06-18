@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import com.pe.fico.entities.Teacher;
-import com.pe.fico.service.IFacultyService;
 import com.pe.fico.service.ITeacherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,9 @@ public class TeacherController {
     @Autowired
     private ITeacherService  tS;
 
-    @Autowired
-    private IFacultyService fS;
-
     @GetMapping("/new")
     public String newTeacher(Model model) {
         model.addAttribute("teacher", new Teacher());
-        model.addAttribute("listaFacultad", fS.findAll());
         model.addAttribute("teacher", new Teacher());
         return "teacher/teacher";
     }
@@ -52,7 +47,6 @@ public class TeacherController {
     public String insertTeacher(@ModelAttribute @Valid Teacher objPro, BindingResult binRes, Model model)
             throws ParseException {
         if (binRes.hasErrors()) {
-            model.addAttribute("listaFacultad", fS.findAll());
             return "teacher/teacher";
         } else {
             boolean flag = tS.save(objPro);
@@ -86,7 +80,6 @@ public class TeacherController {
             objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
             return "redirect:/teachers/list";
         } else {
-            model.addAttribute("listaFacultad", fS.findAll());
             model.addAttribute("teacher", objPro);
             return "teacher/teacher";
         }

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cursos</title>
+    <title>Lista de Cursos</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -55,8 +55,12 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
                     </div>
-
-
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" th:href="@{/enrolls/list}">Matriculas</a>
+                    </div>
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" th:href="@{/roles/list}">Roles</a>
+                    </div>
                 </div>
             </li>
 
@@ -103,7 +107,7 @@
                             </a> <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#"> <i
+                                <a class="dropdown-item" th:href="@{/users/profile/}+${#authentication.getPrincipal().getUsername()}"> <i
                                         class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
                                 </a>
                                 <div class="dropdown-divider"></div>
@@ -142,6 +146,8 @@
                                 <th scope="col">Capacidad</th>
                                 <th scope="col">Campus</th>
                                 <th scope="col">Profesor</th>
+                                <th scope="col">Editar</th>
+                                <th scope="col">Borrar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -154,6 +160,10 @@
                                 <td th:text="${e.maxStudentsCourse}"></td>
                                 <td th:text="${e.campus.nameCampus}"></td>
                                 <td th:text="${e.teacher.nameTeacher}"></td>
+                                <td class="text-center"><a th:href="@{/courses/update/} + ${e.idCourse}"><i class="fa fa-pen"
+                                            style="color: darkgray;"></i></a></td>
+                                <td class="text-center"><a th:href="@{/courses/delete/} + ${e.idCourse}"><i
+                                            class="fa fa-times-circle" style="color: darkgray;"></i></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -170,7 +180,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Web 2020</span>
+                        <span>Copyright &copy; Web 2022</span>
                     </div>
                 </div>
             </footer>

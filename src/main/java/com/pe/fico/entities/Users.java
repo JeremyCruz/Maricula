@@ -1,6 +1,5 @@
 package com.pe.fico.entities;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,16 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
 @Entity
 @Table(name = "users")
-public class Users implements Serializable {
+public class Users {
 
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +49,6 @@ public class Users implements Serializable {
 	private String edadUser;
 
 	@Column(length = 70)
-	@Email(message = "Ingresar un email valido.")
 	private String email;
 
 	@Size(min = 9, max = 15)
@@ -67,6 +63,7 @@ public class Users implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private List<Role> roles;
+
 
 	public Long getId() {
 		return id;

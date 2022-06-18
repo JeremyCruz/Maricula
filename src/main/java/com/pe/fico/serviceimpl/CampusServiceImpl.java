@@ -18,7 +18,6 @@ public class CampusServiceImpl implements ICampusService {
 
     @Override
     public boolean save(Campus campus) {
-        // TODO Auto-generated method stub
         Campus obCampus = cR.save(campus);
         if (obCampus == null) {
             return false;
@@ -29,14 +28,12 @@ public class CampusServiceImpl implements ICampusService {
 
     @Override
     public void delete(Integer idCampus) {
-        // TODO Auto-generated method stub
         cR.deleteById(idCampus);
 
     }
 
     @Override
     public List<Campus> findAll() {
-        // TODO Auto-generated method stub
         return cR.findAll();
     }
 

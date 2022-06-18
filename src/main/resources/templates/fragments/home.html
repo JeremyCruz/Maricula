@@ -44,17 +44,26 @@
 					aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>Men&uacute;</span>
 				</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
+					<div class="bg-white py-2 collapse-inner rounded" sec:authorize= "hasRole('ROLE_ADMIN')">
 						<a class="collapse-item" th:href="@{/teachers/list}">Profesores</a>
 					</div>
-					<div class="bg-white py-2 collapse-inner rounded">
+					<div class="bg-white py-2 collapse-inner rounded" sec:authorize= "hasRole('ROLE_ADMIN')">
 						<a class="collapse-item" th:href="@{/users/list}">Usuarios</a>
 					</div>
-					<div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
+					<div class="bg-white py-2 collapse-inner rounded" sec:authorize= "hasRole('ROLE_ADMIN')">
+						<a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded" sec:authorize= "hasRole('ROLE_ADMIN')">
+						<a class="collapse-item" th:href="@{/enrolls/list}">Matriculas</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded" sec:authorize= "hasRole('ROLE_ADMIN')">
+                        <a class="collapse-item" th:href="@{/roles/list}">Roles</a>
                     </div>
 
-
+					<div class="bg-white py-2 collapse-inner rounded" sec:authorize= "hasRole('ROLE_USER')">
+                        <a class="collapse-item" th:href="@{/enrolls/coursebyuser/}+${#authentication.getPrincipal().getUsername()}">Tus Cursos</a>
+                    </div>
+					
 				</div>
 			</li>
 
@@ -102,7 +111,7 @@
 							</a> <!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
+								<a class="dropdown-item" th:href="@{/users/profile/}+${#authentication.getPrincipal().getUsername()}"> <i
 										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
 								</a>
 								<div class="dropdown-divider"></div>
@@ -135,7 +144,7 @@
 			<footer class="sticky-footer bg-white">
 				<div class="container my-auto">
 					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Web 2020</span>
+						<span>Copyright &copy; Web 2022</span>
 					</div>
 				</div>
 			</footer>

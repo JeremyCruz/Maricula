@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Profesores</title>
+    <title>Profesor</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -45,13 +45,20 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/teachers/list}">Profesores</a>
-                    </div>
+						<a class="collapse-item" th:href="@{/teachers/list}">Profesores</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" th:href="@{/users/list}">Usuarios</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" th:href="@{/enrolls/list}">Matriculas</a>
+					</div>
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/users/list}">Usuarios</a>
+                        <a class="collapse-item" th:href="@{/roles/list}">Roles</a>
                     </div>
-
-
                 </div>
             </li>
 
@@ -99,7 +106,7 @@
                             </a> <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#"> <i
+                                <a class="dropdown-item" th:href="@{/users/profile/}+${#authentication.getPrincipal().getUsername()}"> <i
                                         class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
                                 </a>
                                 <div class="dropdown-divider"></div>
@@ -129,11 +136,13 @@
                     </div>
 
                     <form th:action="@{/teachers/save}" th:object="${teacher}" method="post">
+
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Nombre</label>
                             <div class="col-sm-6">
+                                <input type="hidden" th:field="*{idTeacher}"/>
                                 <input type="text" th:field="*{nameTeacher}" class="form-control"
-                                    th:errorclass="form-control alert-danger" /> <small class="form-text text-danger"
+                                    th:errorclass="'form-control alert-danger'" /> <small class="form-text text-danger"
                                     th:if="${#fields.hasErrors('nameTeacher')}" th:errors="*{nameTeacher}"></small>
                             </div>
                         </div>
@@ -141,22 +150,13 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Especialización</label>
                             <div class="col-sm-6">
-                                <input type="text" th:field="*{specializationTeacher}" class="form-control" required
+                                <input type="text" th:field="*{specializationTeacher}" class="form-control"
                                     th:errorclass="'form-control alert-danger'" /> <small class="form-text text-danger"
                                     th:if="${#fields.hasErrors('specializationTeacher')}"
                                     th:errors="*{specializationTeacher}"></small>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Facultad</label>
-                            <div class="col-sm-6">
-                                <select class="custom-select custom-select" th:field="*{faculty}">
-                                    <option th:each="u : ${listaFacultad}" th:value="${u.idFaculty}"
-                                        th:utext="${u.nameFaculty}" />
-                                </select> 
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
                                 <input type="submit" value="Guardar" class="btn btn-secondary"></input>
@@ -179,7 +179,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Web 2020</span>
+                        <span>Copyright &copy; Web 2022</span>
                     </div>
                 </div>
             </footer>

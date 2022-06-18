@@ -15,7 +15,7 @@
 	<name>FicoSpring</name>
 	<description>Project about Fico</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

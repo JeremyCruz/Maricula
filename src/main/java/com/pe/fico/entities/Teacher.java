@@ -1,11 +1,10 @@
 package com.pe.fico.entities;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -25,20 +24,15 @@ public class Teacher {
     @Column(name = "specializationTeacher", nullable = false, length = 150)
     private String specializationTeacher;
 
-    @ManyToOne
-    @JoinColumn(name = "idFaculty", nullable = false)
-    private Faculty faculty;
-
     public Teacher() {
         super();
     }
 
     public Teacher(int idTeacher, @NotEmpty(message = "Debe ingresar nombre del profesor") String nameTeacher,
-            @NotEmpty(message = "Debe ingresar profesión del profesor") String specializationTeacher, Faculty faculty) {
+            @NotEmpty(message = "Debe ingresar profesión del profesor") String specializationTeacher) {
         this.idTeacher = idTeacher;
         this.nameTeacher = nameTeacher;
         this.specializationTeacher = specializationTeacher;
-        this.faculty = faculty;
     }
 
     public int getIdTeacher() {
@@ -64,14 +58,5 @@ public class Teacher {
     public void setSpecializationTeacher(String specializationTeacher) {
         this.specializationTeacher = specializationTeacher;
     }
-
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
 
 }

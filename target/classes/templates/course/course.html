@@ -45,16 +45,20 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/teachers/list}">Profesores</a>
-                    </div>
+						<a class="collapse-item" th:href="@{/teachers/list}">Profesores</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" th:href="@{/users/list}">Usuarios</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" th:href="@{/enrolls/list}">Matriculas</a>
+					</div>
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/users/list}">Usuarios</a>
+                        <a class="collapse-item" th:href="@{/roles/list}">Roles</a>
                     </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
-                    </div>
-
-
                 </div>
             </li>
 
@@ -102,7 +106,7 @@
                             </a> <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#"> <i
+                                <a class="dropdown-item" th:href="@{/users/profile/}+${#authentication.getPrincipal().getUsername()}"> <i
                                         class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
                                 </a>
                                 <div class="dropdown-divider"></div>
@@ -132,11 +136,11 @@
                     </div>
 
                     <form th:action="@{/courses/save}" th:object="${course}" method="post">
-
-
+                        
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Nombre</label>
                             <div class="col-sm-6">
+                                <input type="hidden" th:field="*{idCourse}"/>
                                 <input type="text" th:field="*{nameCourse}" class="form-control"
                                     th:errorclass="'form-control alert-danger'" /> <small class="form-text text-danger"
                                     th:if="${#fields.hasErrors('nameCourse')}" th:errors="*{nameCourse}"></small>
@@ -147,7 +151,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 col-form-label">Sección</label>
                             <div class="col-sm-6">
-                                <input type="text" th:field="*{roomCourse}" class="form-control" required
+                                <input type="text" th:field="*{roomCourse}" class="form-control" 
                                     th:errorclass="'form-control alert-danger'" /> <small class="form-text text-danger"
                                     th:if="${#fields.hasErrors('roomCourse')}" th:errors="*{roomCourse}"></small>
                             </div>
@@ -196,7 +200,7 @@
                         <div class="form-group row">
                             <label for="check" class="col-sm-2 col-form-label">Disponile</label>
                             <div class="col-sm-6">
-                                <input type="checkbox" required th:field="*{available}" class="form-control"
+                                <input type="checkbox" th:field="*{available}" class="form-control"
                                     id="check"></input>
                             </div>
                         </div>
@@ -226,7 +230,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Web 2020</span>
+                        <span>Copyright &copy; Web 2022</span>
                     </div>
                 </div>
             </footer>

@@ -8,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Profesores</title>
+	<title>Lista Profesores</title>
 
 	<!-- Custom fonts for this template-->
 	<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -51,10 +51,14 @@
 						<a class="collapse-item" th:href="@{/users/list}">Usuarios</a>
 					</div>
 					<div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
+						<a class="collapse-item" th:href="@{/courses/list}">Cursos</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" th:href="@{/enrolls/list}">Matriculas</a>
+					</div>
+					<div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" th:href="@{/roles/list}">Roles</a>
                     </div>
-
-
 				</div>
 			</li>
 
@@ -102,7 +106,7 @@
 							</a> <!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
+								<a class="dropdown-item" th:href="@{/users/profile/}+${#authentication.getPrincipal().getUsername()}"> <i
 										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
 								</a>
 								<div class="dropdown-divider"></div>
@@ -129,28 +133,32 @@
 
 					<hr class="sidebar-divider">
 
-					<table class="table">
+					<table class="table table-striped">
 						<thead class="thead-dark">
 							<tr>
 								<th scope="col">Id</th>
 								<th scope="col">Profesor</th>
-                                <th scope="col">Carrera</th>
-								<th scope="col">Facultad</th>
+								<th scope="col">Carrera</th>
+								<th class="text-center" scope="col">Editar</th>
+								<th class="text-center" scope="col">Borrar</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="u: ${listaProfesores}">
 								<td th:text="${u.idTeacher}"></td>
 								<td th:text="${u.nameTeacher}"></td>
-                                <td th:text="${u.specializationTeacher}"></td>
-								<td th:text="${u.faculty.nameFaculty}"></td>
+								<td th:text="${u.specializationTeacher}"></td>
+								<td class="text-center"><a th:href="@{/teachers/update/} + ${u.idTeacher}"><i
+											class="fa fa-pen" style="color: darkgray;"></i></a></td>
+								<td class="text-center"><a th:href="@{/teachers/delete/} + ${u.idTeacher}"><i
+											class="fa fa-times-circle" style="color: darkgray;"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
 
 					<p th:text="${mensaje}" class="form-text text-success"></p>
 
-					
+
 				</div>
 				<!-- /.container-fluid -->
 
@@ -161,7 +169,7 @@
 			<footer class="sticky-footer bg-white">
 				<div class="container my-auto">
 					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Web 2020</span>
+						<span>Copyright &copy; Web 2022</span>
 					</div>
 				</div>
 			</footer>

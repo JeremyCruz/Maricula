@@ -57,13 +57,11 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public List<Users> findByNameUsers(String name) {
-		// TODO Auto-generated method stub
 		return uR.findByNameUsers(name);
 	}
 
 	@Override
 	public List<Users> findByNameLikeIgnoreCase(String name) {
-		// TODO Auto-generated method stub
 		return uR.findByNameLikeIgnoreCase(name);
 	}
 

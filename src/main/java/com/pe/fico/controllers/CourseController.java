@@ -106,9 +106,11 @@ public class CourseController {
             objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
             return "redirect:/courses/list";
         } else {
-            tS.delete(id);
+            cS.delete(id);
             return "redirect:/courses/list";
         }
     }
+
+    
 
 }

@@ -1,6 +1,5 @@
 package com.pe.fico.controllers;
 
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.text.ParseException;
@@ -8,10 +7,6 @@ import java.text.ParseException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +14,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pe.fico.entities.Users;
-import com.pe.fico.service.IUploadFileService;
 import com.pe.fico.service.IUserService;
 
 @Controller
@@ -38,9 +30,6 @@ public class UserController {
 	private IUserService uS;
 
 	@Autowired
-	private IUploadFileService uService;
-
-	@Autowired
 	private BCryptPasswordEncoder passwordE;
 
 	@GetMapping("/new")
@@ -48,71 +37,32 @@ public class UserController {
 
 		model.addAttribute("user", new Users());
 		model.addAttribute("listaUsuarios", uS.list());
+		model.addAttribute("user", new Users());
 		return "user/user";
 	}
 	
-	@GetMapping("/registro")
-	public String negistro(Model model) {
-
-		model.addAttribute("user", new Users());
-		model.addAttribute("listaUsuarios", uS.list());
-		return "registro";
-	}
-
 	@GetMapping("/home")
 	public String newHome(Model model) {
 		return "fragments/home";
 	}
 
-	@PostMapping("/save")
-	public String saveUser(@ModelAttribute @Valid Users user, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status)
-			throws ParseException {
-		model.addAttribute("user", new Users());
-		if (result.hasErrors()) {
-			return "registro";
-		} else {
-			model.addAttribute("user", new Users());
-			String bcryptPassword = passwordE.encode(user.getPassword());
-			user.setPassword(bcryptPassword);
-			int rpta = uS.insert(user);
-			if (rpta > 0) {
-				model.addAttribute("mensaje", "Ya existe");
-				model.addAttribute("listaUsuarios", uS.list());
-				return "registro";
-			} else {
-				model.addAttribute("mensaje", "Se guardó correctamente");
-				status.setComplete();
-			}
-			boolean flag = uS.insertboo(user);
-			if (flag) {
-				return "login";
-			} else {
-				model.addAttribute("mensaje", "Ocurrió un error");
-				return "registro";
-			}
-		}
-
-	}
-
-	@PostMapping("/edit")
-	public String editUser(@ModelAttribute @Valid Users user, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status)
+	@RequestMapping("/save")
+	public String saveUser(@ModelAttribute @Valid Users objPro, BindingResult result, Model model)
 			throws ParseException {
 		if (result.hasErrors()) {
-			model.addAttribute("user", user);
-			return "user/ediuser";
+			
+			return "user/user";
 		} else {
-			model.addAttribute("user", user);
-		
-			boolean flag = uS.insertboo(user);
+			String bcryptPassword = passwordE.encode(objPro.getPassword());
+			objPro.setPassword(bcryptPassword);
+			boolean flag = uS.insertboo(objPro);
 			if (flag) {
-				model.addAttribute("mensaje", "Se guardó correctamente");
-				status.setComplete();
+				return "redirect:/users/list";
 			} else {
 				model.addAttribute("mensaje", "Ocurrió un error");
+                return "redirect:/users/new";
 			}
 		}
-		model.addAttribute("listaUsuarios", uS.list());
-		return "user/listUser";
 	}
 
 	@GetMapping("/list")
@@ -126,22 +76,13 @@ public class UserController {
 		return "user/listUser";
 	}
 
-	@GetMapping(value = "/uploads/{filename:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
+	@RequestMapping("/list")
+    public String listCourse(Map<String, Object> model) {
+        model.put("listaUsuarios", uS.list());
+        return "user/listUsers";
+    }
 
-		Resource recurso = null;
-
-		try {
-			recurso = uService.load(filename);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
-				.body(recurso);
-	}
-
+	
 	@GetMapping(value = "/view/{id}")
 	public String view(@PathVariable(value = "id") long id, Map<String, Object> model, RedirectAttributes flash) {
 
@@ -164,10 +105,10 @@ public class UserController {
 		Users user = uS.listarId(id);
 		if (user == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrira un error");
-			return "user/edituser";
+			return "user/user";
 		} else {
 			model.addAttribute("user", user);
-			return "user/edituser";
+			return "user/user";
 		}
 	}
 

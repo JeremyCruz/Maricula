@@ -19,7 +19,6 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public boolean save(Course course) {
-        // TODO Auto-generated method stub
         Course objCourse = cR.save(course);
         if (objCourse == null) {
             return false;
@@ -31,28 +30,29 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     @Transactional(readOnly = true)
     public Course listId(int idCourse) {
-        // TODO Auto-generated method stub
         Optional<Course> op = cR.findById(idCourse);
 		return op.isPresent() ? op.get() : new Course();
     }
 
     @Override
     public void delete(int idCourse) {
-        // TODO Auto-generated method stub
         cR.deleteById(idCourse);
 
     }
 
     @Override
     public List<Course> findAll() {
-        // TODO Auto-generated method stub
         return cR.findAll();
     }
 
     @Override
     public List<Course> findAvailableCourses() {
-        // TODO Auto-generated method stub
-        return null;
+        return cR.findCoursesAvailables();
+    }
+
+    @Override
+    public void updateCheck(int idCourse) {
+       cR.update_available(idCourse);
     }
 
 }

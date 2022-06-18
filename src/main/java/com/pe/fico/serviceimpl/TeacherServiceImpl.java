@@ -20,7 +20,6 @@ public class TeacherServiceImpl implements ITeacherService {
 
     @Override
     public boolean save(Teacher teacher) {
-        // TODO Auto-generated method stub
         Teacher objTeacher = tR.save(teacher);
         if (objTeacher == null) {
             return false;
@@ -32,21 +31,18 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     @Transactional(readOnly = true)
     public Teacher listId(int idTeacher) {
-        // TODO Auto-generated method stub
         Optional<Teacher> op = tR.findById(idTeacher);
         return op.isPresent() ? op.get() : new Teacher();
     }
 
     @Override
     public void delete(int idTeacher) {
-        // TODO Auto-generated method stub
         tR.deleteById(idTeacher);
 
     }
 
     @Override
     public List<Teacher> list() {
-        // TODO Auto-generated method stub
         return tR.findAll();
     }
 

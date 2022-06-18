@@ -23,7 +23,6 @@ public class RoleServiceImpl implements IRoleService{
 
 	@Override
 	public List<Role> list() {
-		// TODO Auto-generated method stub
 		return rR.findAll();
 	}
 
@@ -34,13 +33,11 @@ public class RoleServiceImpl implements IRoleService{
 
 	@Override
 	public Optional<Role> listarId(long id) {
-		// TODO Auto-generated method stub
 		return rR.findById(id);
 	}
 
 	@Override
 	public List<String[]> rolXedad() {
-		// TODO Auto-generated method stub
 		return rR.rolXedad();
 	}
 
