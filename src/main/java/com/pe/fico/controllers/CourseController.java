@@ -62,6 +62,7 @@ public class CourseController {
         } else {
             boolean flag = cS.save(objPro);
             if (flag) {
+                model.addAttribute("mensaje", "Guardado correcto");
                 return "redirect:/courses/list";
             } else {
                 model.addAttribute("mensaje", "Ocurrió un error");
@@ -103,7 +104,7 @@ public class CourseController {
 
         Course objPro = cS.listId(id);
         if (objPro == null) {
-            objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
+            objRedir.addFlashAttribute("mensaje", " un error");
             return "redirect:/courses/list";
         } else {
             cS.delete(id);

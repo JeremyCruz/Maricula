@@ -19,6 +19,11 @@ public interface ICourseRepository extends JpaRepository<Course, Integer> {
     @Query(value = "update Course c set available = FALSE where c.id_course =?1", nativeQuery = true)
     void update_available(Integer curso);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Course c set available = TRUE where c.id_course =?1", nativeQuery = true)
+    void update_false(Integer curso);
+
     @Query("select c from Course c where c.available =TRUE")
 	List<Course> findCoursesAvailables();
 }

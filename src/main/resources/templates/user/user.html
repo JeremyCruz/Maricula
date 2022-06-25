@@ -127,13 +127,13 @@
 
 					<hr class="sidebar-divider">
 
-					<div th:object="${user}" th:remove="tag">
+					<div th:object="${usuario}" th:remove="tag">
 						<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
 							<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
 						</ul>
 					</div>
 
-					<form th:action="@{/users/save}" th:object="${user}" method="post">
+					<form th:action="@{/users/save}" th:object="${usuario}" method="post">
 
 						<div class="form-group row">
 							<label for="nombre" class="col-sm-2 col-form-label">Nombres</label>
@@ -192,7 +192,7 @@
 							<label for="name" class="col-sm-2 col-form-label">Usuario</label>
 							<div class="col-sm-6">
 								<input type="text" th:field="*{username}" class="form-control"
-									th:errorclass="'form-control alert-danger'" required /> <small
+									th:errorclass="'form-control alert-danger'" required pattern="[0-9]{9,10}"/> <small
 									class="form-text text-danger" th:if="${#fields.hasErrors('username')}"
 									th:errors="*{username}"></small>
 							</div>
@@ -202,7 +202,7 @@
 							<label for="contra" class="col-sm-2 col-form-label">Password</label>
 							<div class="col-sm-6">
 								<input type="password" th:field="*{password}" class="form-control"
-									th:errorclass="'form-control alert-danger'" required /> <small
+									th:errorclass="'form-control alert-danger'" required pattern="[0-9A-Za-z]{9,10}" /> <small
 									class="form-text text-danger" th:if="${#fields.hasErrors('password')}"
 									th:errors="*{password}"></small>
 							</div>

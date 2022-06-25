@@ -1,6 +1,7 @@
 package com.pe.fico.controllers;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -43,14 +44,19 @@ public class EnrollController {
 
     @RequestMapping("/coursebyuser/{id}")
     public String listCoursesByUser(@PathVariable String id, Model model) {
-
-        try {
-            model.addAttribute("enroll", new Enroll());
-            model.addAttribute("listaMatricula", eS.findByUser(id));
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
+        List<Enroll> Aux = eS.findByUser(id);
+        if (Aux.isEmpty()) {
+            model.addAttribute("mensaje", "No hay datos que mostrar");
+            return "enroll/listCoursesByStudent";
+        }else{
+            try {
+                model.addAttribute("enroll", new Enroll());
+                model.addAttribute("listaMatricula", eS.findByUser(id));
+            } catch (Exception e) {
+                model.addAttribute("error", e.getMessage());
+            }
+            return "enroll/listCoursesByStudent";
         }
-        return "enroll/listCoursesByStudent";
     }
 
     @GetMapping("/list")
@@ -65,7 +71,8 @@ public class EnrollController {
     }
 
     @RequestMapping("/save")
-    public String insertEnroll(@ModelAttribute @Valid Enroll objPro, BindingResult binRes, Model model)
+    public String insertEnroll(@ModelAttribute @Valid Enroll objPro, BindingResult binRes, Model model,
+            RedirectAttributes objRedir)
             throws ParseException {
         if (binRes.hasErrors()) {
             model.addAttribute("listaCursos", cS.findAvailableCourses());
@@ -77,8 +84,11 @@ public class EnrollController {
                 boolean flag = eS.save(objPro);
                 if (eS.update_available(objPro)) {
                     cS.updateCheck(objPro.getCourse().getIdCourse());
+                } else {
+                    cS.updateCheckA(objPro.getCourse().getIdCourse());
                 }
                 if (flag) {
+                    objRedir.addFlashAttribute("mensaje", "Matricula registrada");
                     return "redirect:/enrolls/list";
                 } else {
                     model.addAttribute("mensaje", "Ocurrió un error");
@@ -130,6 +140,11 @@ public class EnrollController {
             return "redirect:/enrolls/list";
         } else {
             eS.delete(id);
+            if (eS.update_available(objPro)) {
+                cS.updateCheck(objPro.getCourse().getIdCourse());
+            } else {
+                cS.updateCheckA(objPro.getCourse().getIdCourse());
+            }
             return "redirect:/enrolls/list";
         }
     }

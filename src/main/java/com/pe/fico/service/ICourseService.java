@@ -17,4 +17,5 @@ public interface ICourseService {
     List<Course> findAvailableCourses();
 
     public void updateCheck(int idCourse);
+    public void updateCheckA(int idCourse);
 }

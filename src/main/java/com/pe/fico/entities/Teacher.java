@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "teacher")
@@ -17,10 +18,14 @@ public class Teacher {
     private int idTeacher;
 
     @NotEmpty(message = "Debe ingresar nombre del profesor")
+    @Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El nombre no puede contener caracteres especiales")
+    @Pattern(regexp = "[^0-9]+", message = "El nombre no puede contener un número")
     @Column(name = "nameTeacher", nullable = false, length = 150)
     private String nameTeacher;
 
     @NotEmpty(message = "Debe ingresar profesión del profesor")
+    @Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "La especialidad no puede contener caracteres especiales")
+    @Pattern(regexp = "[^0-9]+", message = "La especialidad no puede contener un número")
     @Column(name = "specializationTeacher", nullable = false, length = 150)
     private String specializationTeacher;
 

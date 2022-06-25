@@ -20,9 +20,6 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public Integer insert(Users user) {
 		int rpta = uR.buscarUsername(user.getUsername());
-		if (rpta == 0) {
-			uR.save(user);
-		}
 		return rpta;
 	}
 

@@ -23,7 +23,6 @@ import com.pe.fico.service.IUserService;
 
 @Controller
 @RequestMapping("users")
-//@Secured("ROLE_ADMIN")
 public class UserController {
 
 	@Autowired
@@ -35,22 +34,21 @@ public class UserController {
 	@GetMapping("/new")
 	public String newUser(Model model) {
 
-		model.addAttribute("user", new Users());
+		model.addAttribute("usuario", new Users());
 		model.addAttribute("listaUsuarios", uS.list());
-		model.addAttribute("user", new Users());
+		model.addAttribute("usuario", new Users());
 		return "user/user";
 	}
-	
+
 	@GetMapping("/home")
 	public String newHome(Model model) {
 		return "fragments/home";
 	}
 
 	@RequestMapping("/save")
-	public String saveUser(@ModelAttribute @Valid Users objPro, BindingResult result, Model model)
+	public String saveUser(@ModelAttribute @Valid Users objPro, BindingResult binRes, Model model)
 			throws ParseException {
-		if (result.hasErrors()) {
-			
+		if (binRes.hasErrors()) {
 			return "user/user";
 		} else {
 			String bcryptPassword = passwordE.encode(objPro.getPassword());
@@ -60,7 +58,7 @@ public class UserController {
 				return "redirect:/users/list";
 			} else {
 				model.addAttribute("mensaje", "Ocurrió un error");
-                return "redirect:/users/new";
+				return "redirect:/users/new";
 			}
 		}
 	}
@@ -68,7 +66,7 @@ public class UserController {
 	@GetMapping("/list")
 	public String listUser(Model model) {
 		try {
-			model.addAttribute("user", new Users());
+			model.addAttribute("usuario", new Users());
 			model.addAttribute("listaUsuarios", uS.list());
 		} catch (Exception e) {
 			model.addAttribute("error", e.getMessage());
@@ -77,12 +75,17 @@ public class UserController {
 	}
 
 	@RequestMapping("/list")
-    public String listCourse(Map<String, Object> model) {
-        model.put("listaUsuarios", uS.list());
-        return "user/listUsers";
-    }
+	public String listCourse(Map<String, Object> model) {
+		model.put("listaUsuarios", uS.list());
+		return "user/listUsers";
+	}
 
-	
+	@RequestMapping("/listarId")
+	public String listarId(Map<String, Object> model, @ModelAttribute Users pro) {
+		uS.listarId(pro.getId());
+		return "user/listUsers";
+	}
+
 	@GetMapping(value = "/view/{id}")
 	public String view(@PathVariable(value = "id") long id, Map<String, Object> model, RedirectAttributes flash) {
 
@@ -90,10 +93,10 @@ public class UserController {
 
 		if (user == null) {
 			flash.addFlashAttribute("error", "El registro no existe en la base de datos");
-			return "usersecurity/listUser";
+			return "user/listUser";
 		}
 
-		model.put("user", user);
+		model.put("usuario", user);
 		model.put("titulo", "Detalle de registro: " + user.getName());
 
 		return "user/ver";
@@ -107,7 +110,7 @@ public class UserController {
 			objRedir.addFlashAttribute("mensaje", "Ocurrira un error");
 			return "user/user";
 		} else {
-			model.addAttribute("user", user);
+			model.addAttribute("usuario", user);
 			return "user/user";
 		}
 	}
@@ -123,7 +126,7 @@ public class UserController {
 		} catch (Exception e) {
 			System.out.println("Error al eliminar");
 		}
-		model.addAttribute("user", user);
+		model.addAttribute("usuario", user);
 		model.addAttribute("listaUsuarios", uS.list());
 		return "user/listUser";
 	}
@@ -144,9 +147,10 @@ public class UserController {
 		model.put("listaUsuarios", listUsers);
 		return "user/listUser";
 	}
-	
+
 	@GetMapping(value = "/profile/{username}")
-	public String viewprofile(@PathVariable(value = "username")String name, Map<String, Object> model, RedirectAttributes flash) {
+	public String viewprofile(@PathVariable(value = "username") String name, Map<String, Object> model,
+			RedirectAttributes flash) {
 
 		Users user = uS.listName(name);
 
@@ -155,7 +159,7 @@ public class UserController {
 			return "user/listUser";
 		}
 
-		model.put("user", user);
+		model.put("usuario", user);
 		model.put("titulo", "Detalle de registro: " + user.getName());
 
 		return "user/ver";

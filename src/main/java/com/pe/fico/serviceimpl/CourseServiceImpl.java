@@ -55,4 +55,10 @@ public class CourseServiceImpl implements ICourseService {
        cR.update_available(idCourse);
     }
 
+    @Override
+    public void updateCheckA(int idCourse) {
+        // TODO Auto-generated method stub
+        cR.update_false(idCourse);
+    }
+
 }

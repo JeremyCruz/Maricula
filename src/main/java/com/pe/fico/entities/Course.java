@@ -8,7 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 @Entity
@@ -20,18 +23,22 @@ public class Course {
     private int idCourse;
 
     @NotEmpty(message = "Debe ingresar nombre del curso")
+    @Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El nombre no puede contener caracteres especiales")
     @Column(name = "nameCourse", nullable = false, length = 150)
     private String nameCourse;
 
     @NotEmpty(message = "Debe ingresar salon")
+    @Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "La sección no puede contener caracteres especiales")
     @Column(name = "roomCourse", nullable = false, length = 150)
     private String roomCourse;
 
     @Positive
+    @Max(value= 10, message="Los creditos son maximo 10")
     @Column(name = "creditsCourse", nullable = false)
     private int creditsCourse;
 
     @Positive
+    @Min(value= 10, message="El número minimo es 10")
     @Column(name = "maxStudentsCourse", nullable = false)
     private int maxStudentsCourse;
 
